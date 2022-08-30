@@ -1,0 +1,449 @@
+/* Обнуление */
+*,
+*::before,
+*::after {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+a {
+    text-decoration: none;
+}
+ul,
+ol,
+li {
+    list-style: none;
+}
+img {
+    vertical-align: top;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: inherit;
+    font-size: inherit;
+}
+html,
+body {
+    height: 100%;
+    font-size: 18px;
+    color: #fff;
+    font-weight: 500;
+    font-family: Rubik, sans-serif;
+}
+input,button,textarea {
+    font-family: inherit;
+}
+/* Оболочка wrapper нужна для того чтобы не появлялся горизонтальный скролл (при
+каких-либо отрицательных отступах или позиционировании, блок можно поместить за пределы
+экрана и в такие моменты появляется горизонтальный скролл) */
+.wrapper {
+    min-height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+._ibg {
+    position: relative;
+}
+._ibg img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    object-fit: cover;
+}
+
+
+/* ------------------------------------------------------------ */
+.container {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 15px;
+    box-sizing: content-box;
+}
+.header {
+    position: fixed;
+    width: 100%;
+    left: 0;
+    top: 0;
+    z-index: 50;
+    
+}
+
+.header__container {
+    min-height: 148px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    position: relative;
+}
+
+
+/* Селекторы логотипа */
+.logo {
+    
+}
+.header__logo {
+    position: relative;
+    z-index: 3;
+}
+.header__logo a img{
+     max-width: 100%;
+}
+.header__burger {
+    display: none;
+}
+
+.header__navigation-search {
+    display: flex; 
+    align-items: center;
+    padding-left: 50px;
+    position: relative;
+    z-index: 3;
+}
+.menu__list {
+    display: flex;
+    flex-wrap: wrap;
+    
+}
+.menu__item {
+    margin: 0 50px 0 0;
+}
+
+.menu__link {
+    color: #fff;
+    line-height: calc(21 / 18 * 100%);
+    position: relative;
+}
+
+.menu__link::before{
+    content: '';
+    bottom: -20%;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    border-radius: 20px;
+    background-color: #e30a17;
+    transition: 0.3s;
+    transform: scaleX(0);
+}
+.menu__link:hover:before {
+    transform: scaleX(1);
+}
+@media (max-width: 767px) {
+    /* Запрет скролла при открытом меню */
+    body.lock {
+        overflow: hidden;
+    }
+    .header__container {
+        min-height: 50px;
+    }
+    /* Фоновая плашка шапки */
+    .header:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #c90916;
+        z-index: 3;
+    }
+    .header__logo{
+        flex: 0 0 80px;
+    }
+    .header__burger {
+        cursor: pointer;
+        display: block;
+        position: relative;
+        width: 30px;
+        height: 20px;
+        z-index: 3;
+    }
+    /* Три полоски */
+    .header__burger span {
+        position: absolute;
+        background-color: #fff;
+        position: absolute;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        top: 9px;
+        transition: all 0.3s ease 0s;
+    }
+    .header__burger:before, 
+    .header__burger:after {
+        content: '';
+        background-color: #fff;
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        left: 0;
+        transition: all 0.3s ease 0s;
+    }
+    .header__burger:before {
+        top: 0;
+    }
+    .header__burger:after {
+        bottom: 0;
+    }
+    /* Кнопка меню превращается в крестик */
+    .header__burger.active span{
+        transform: scale(0);
+    }
+    .header__burger.active:before {
+        transform: rotate(45deg);
+        top: 9px;
+    }
+    .header__burger.active:after {
+        transform: rotate(-45deg);
+        bottom: 9px;
+    } 
+    .header__navigation-search {
+        position: fixed;
+        /* Скрытие всех элементов и фона меню при неактивной кнопки меню */
+        top: -100%;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgb(241, 224, 123);
+        /* padding: 70px 15px 30px 15px; */
+        flex-direction: column;
+        justify-content: center;
+        padding: 70px 15px 30px 15px;
+        transition: all 0.3s ease 0s;
+        /* При горизонтальном положении моб. устройства появляется скролл если
+        элементы меню не помещаются на экране полностью */
+        overflow: auto;
+        z-index: 2;
+    }
+    /* Появление элементов и фона меню при активной кнопки меню */
+    .header__navigation-search.active {
+        top: 0;
+    }
+    /* Выравнивание элементов */
+    .menu__list {
+        flex-direction: column;
+        align-items: center;
+    }
+    .menu__item {
+        margin-right: 0;
+        margin-bottom: calc(20px + (50 - 20) * ((100vw - 320px) / (767 - 320)));
+    }
+    .menu__link {
+        font-size: 30px;
+    }
+    @media (max-height: 767px) {
+        .header__navigation-search {
+            
+            /* padding-top: calc(180px + (250 - 180) * ((100vh - 320px) / (767 - 320))); */
+        }
+     }
+}
+
+
+/* Селекторы меню и поиска */
+/* .navigation-search {
+} */
+
+
+ @media (max-width: 730px) {
+    .header__navigation-search {
+        
+    }
+}
+/* @media (max-width: 1130px) {
+    .header__menu {
+        margin: 0 0 0 300px;
+    }
+}
+@media (max-width: 980px) {
+    .header__menu {
+        margin: 0 0 0 150px;
+    }
+}
+@media (max-width: 830px) {
+    .header__menu {
+        margin: 0 0 0 75px;
+    }
+} */
+
+
+/* .navigation-search__menu {
+} */
+
+
+/* ===================================PAGE============================================= */
+
+.page {
+    position: relative;
+}
+
+.page__image {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+.page__image img {
+    /* object-position: right; */
+}
+
+
+/* ===================================page-block__top================================== */
+.page__block-top {
+    padding: 325px 0 0 0;
+    /* чтобы тело главной страницы было поверх картинки, так как картинка абсолютна */
+    position: relative; 
+    z-index: 2;
+    
+    /* display: flex;
+    flex-direction: column; */
+}
+.block-top {
+    max-width: 546px;
+}
+/* Обращение к тегам первой вложенности (ко второму и первому элементу) */
+.block-top > *:nth-child(-n+2) {
+    margin: 0 0 35px 0;
+}
+.block-top__title {
+    font-weight: 700;
+    font-size: 64px;
+    line-height: calc(67 / 64 * 100%);
+    
+}
+.block-top__text {
+    font-weight: 400;
+    font-size: 24px;
+    line-height: calc(28 / 24 * 100%);
+}
+
+.block-top__button {
+    color: #fff;
+    font-family: Poppins, sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: calc(27 / 18 * 100%);
+    letter-spacing: 1.5px;
+    background: #e30a17;
+    /* box-shadow: 0px 2px 4px #831219; */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 47px;
+    padding: 10px 33px;
+    border-radius: 10px;
+    transition: background-color 0.3s ease-out, 
+    box-shadow 0.3s ease-out, 
+    border-radius 2s ease-out;
+}
+.block-top__button:hover {
+    cursor: pointer;
+    background-color: rgba(219, 24, 37, 0.616);
+    box-shadow: inset 0 0 0 1px rgb(255, 255, 255);
+    border-radius: 20px;
+    
+}
+
+
+/* =====================================page-block__bottom============================= */
+.page__block-bottom {
+    position: relative; 
+    z-index: 2;
+    padding: 0 0 69px 0;
+}
+.block-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+
+
+.block-bottom__social {
+}
+.social {
+    display: flex;
+    align-items: center;
+}
+.social__item {
+    transition: 0.3s;
+}
+.social__item:hover{
+    transform: scale(1.3);
+}
+.social__item:not(:last-child) {
+    margin: 0 20px 0 0;
+
+}
+/* ==================================== */
+/* Карточка с дополнительной информацией*/
+/* .block-bottom__info-card {
+} */
+.info-card {
+    max-width: 296px;
+}
+.info-card__bg {
+    padding: 24px 35px;
+    background-color: rgba(0, 0, 0, 0.616);
+}
+.info-card__title {
+    margin: 0 0 4px 0;
+    font-weight: 900;
+    font-size: 19px;
+    line-height: calc(22 / 18.7259 * 100%);
+    letter-spacing: 1.5px;
+}
+.info-card__description {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: calc(17 / 14 * 100%);
+}
+
+
+/* Кнопка View Details ->*/
+.info-card__button {
+    /* Размер и позиционирование */
+    width: 100%;
+    background: #E30A17;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 18px 34px 18px 0;
+    /* Стили текста */
+    color: #fff;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: calc(17 / 14.0444 * 100%);
+    letter-spacing: 1.5px;
+    transition: background-color 0.3s ease-out, box-shadow 0.3s ease-out;
+}
+.info-card__button:hover {
+    cursor: pointer;
+    background-color: rgba(219, 24, 37, 0.616);
+    box-shadow: inset 0 0 0 1px rgb(255, 255, 255);
+}
+
+.info-card__button img {
+    margin-left: 15px;
+}
+
+
+
+/* + /* Переделать шапку */
+/* - /* Сделать адаптив под мобильные и планшеты */
+/* + /* Научиться делать дублирование строки в ВС код */
+/* - /* Разобраться с позиционированием трёх элементов в главном блоке 
+(возможно ли их поставить в одном flex-container) */
+/* - /* Сделать рефакторинг в css файле до конца */
+/* + /* Сделать линию под текстом при наведении на пункты меню */
